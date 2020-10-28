@@ -10,13 +10,11 @@ namespace MoodAnalyserMSTest
         /// Checks for sad mood and return sad.
         /// </summary>
         [TestMethod]
-        public void CheckFor_SadMood_And_ReturnSAD()
+        public void CheckFor_SadMood_And_ReturnSad()
         {
             ///Create a reference of MoodAnalyser Class
-            MoodAnalyser moodAnalyser = new MoodAnalyser();
-
-            string actualMood = moodAnalyser.AnalyseMood("I am in Sad Mood");
-
+            MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Sad Mood");
+            string actualMood = moodAnalyser.AnalyseMood();
             Assert.AreEqual("Sad",actualMood);
 
         }
@@ -28,10 +26,8 @@ namespace MoodAnalyserMSTest
         public void CheckFor_Sad_Else_ReturnHappy()
         {
             ///create a reference of MoodAnalyser class
-            MoodAnalyser moodAnalyser = new MoodAnalyser();
-
-            string actualMood = moodAnalyser.AnalyseMood("I am in Any mood");
-
+            MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Any mood");
+            string actualMood = moodAnalyser.AnalyseMood();
             Assert.AreEqual("Happy", actualMood);
         }
     }
