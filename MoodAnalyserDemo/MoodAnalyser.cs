@@ -31,11 +31,22 @@ namespace MoodAnalyserDemo
         /// <returns></returns>
         public string AnalyseMood()
         {
-            if (mood.Contains("Sad"))
+            try
             {
-                return "Sad";
+                if (mood.Contains("Sad"))
+                {
+                    return "Sad";
+                }
+                else
+                {
+                    return "Happy";
+                }
             }
-            return "Happy";
+            catch (NullReferenceException exception)
+            {
+                return "Happy";
+            }
+
         }
     }
 }

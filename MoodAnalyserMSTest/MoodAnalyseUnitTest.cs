@@ -15,8 +15,7 @@ namespace MoodAnalyserMSTest
             ///Create a reference of MoodAnalyser Class
             MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Sad Mood");
             string actualMood = moodAnalyser.AnalyseMood();
-            Assert.AreEqual("Sad",actualMood);
-
+            Assert.AreEqual("Sad", actualMood);
         }
 
         /// <summary>
@@ -27,6 +26,17 @@ namespace MoodAnalyserMSTest
         {
             ///create a reference of MoodAnalyser class
             MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Any mood");
+            string actualMood = moodAnalyser.AnalyseMood();
+            Assert.AreEqual("Happy", actualMood);
+        }
+
+        /// <summary>
+        /// Given the null mood should return happy.
+        /// </summary>
+        [TestMethod]
+        public void Given_NullMood_Should_ReturnHappy()
+        {
+            MoodAnalyser moodAnalyser = new MoodAnalyser(null);
             string actualMood = moodAnalyser.AnalyseMood();
             Assert.AreEqual("Happy", actualMood);
         }
