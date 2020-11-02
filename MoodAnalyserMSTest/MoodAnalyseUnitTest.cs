@@ -68,7 +68,7 @@ namespace MoodAnalyserMSTest
 
         /// <summary>
         /// T.C ->  4.1
-        /// Givens the mood analyse class name should return mood analyse object.
+        /// Given the  proper mood analyse class name should return mood analyse object.
         /// </summary>
         [TestMethod]
         public void GivenMoodAnalyseClassName_ShouldReturn_MoodAnalyseObject()
@@ -76,6 +76,47 @@ namespace MoodAnalyserMSTest
             object expected = new MoodAnalyser();
             object obj = MoodAnalyseFactory.CreateMoodAnalyserObject("MoodAnalyserDemo.MoodAnalyser", "MoodAnalyser");
             expected.Equals(obj);
+            ///Assert.AreEqual(expected, obj); --> Here we are not checking the equality of object .thts'y not using Assert statment
+        }
+        /// <summary>
+        /// T.C -> 4.2
+        /// Givens the improper class name should return mood analysis exception.
+        /// </summary>
+        [TestMethod]
+        public void GivenImproperClassName_ShouldThrow_MoodAnalysisException()
+        {
+            try
+            {
+                ///Arrange
+                string className = "DummyNameSpace.MoodAnalyser";
+                string constructorName = "MoodAnalyser";
+
+                ///Act
+                object expectedResult = MoodAnalyseFactory.CreateMoodAnalyserObject(className, constructorName);
+            }
+            catch(MoodAnalysisException exception)
+            {
+                Assert.AreEqual("Class Not Found", exception.Message);
+            }
+        }
+        /// <summary>
+        /// T.C -> 4.3
+        /// Givens the improper constructor name should throw mood analysis exception.
+        /// </summary>
+        [TestMethod]
+        public void GivenImproperConstructorName_ShouldThrow_MoodAnalysisException()
+        {
+            try
+            {
+                string className = "MoodAnalyserDemo.MoodAnalyser";
+                string constructorName = "MoodAnalysis";
+
+                object expectedResult = MoodAnalyseFactory.CreateMoodAnalyserObject(className, constructorName);
+            }
+            catch(MoodAnalysisException exception)
+            {
+                Assert.AreEqual("Constructor Not Found", exception.Message);
+            }
         }
     }
 }
