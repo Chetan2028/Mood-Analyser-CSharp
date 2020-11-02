@@ -10,13 +10,6 @@ namespace MoodAnalyserDemo
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MoodAnalyser"/> class.
-        /// Default Constructor
-        /// </summary>
-        public MoodAnalyser()
-        {
-        }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MoodAnalyser"/> class.
         /// </summary>
         /// <param name="mood">The mood.</param>
         public MoodAnalyser(string mood)
@@ -24,6 +17,13 @@ namespace MoodAnalyserDemo
             this.mood = mood;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoodAnalyser"/> class.
+        /// </summary>
+        public MoodAnalyser()
+        {
+
+        }
         /// <summary>
         /// Analyses the mood.
         /// </summary>
@@ -33,6 +33,10 @@ namespace MoodAnalyserDemo
         {
             try
             {
+                if (mood.Equals(string.Empty))
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.EMPTY_MESSAGE, "Mood cannot be empty");
+                }
                 if (mood.Contains("Sad"))
                 {
                     return "Sad";
@@ -42,9 +46,9 @@ namespace MoodAnalyserDemo
                     return "Happy";
                 }
             }
-            catch (NullReferenceException exception)
+            catch (NullReferenceException)
             {
-                return "Happy";
+                throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NULL_MESSAGE, "Mood cannot be null");
             }
 
         }

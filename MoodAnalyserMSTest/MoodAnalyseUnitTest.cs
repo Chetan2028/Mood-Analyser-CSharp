@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyserDemo;
 
+
 namespace MoodAnalyserMSTest
 {
     [TestClass]
@@ -34,11 +35,47 @@ namespace MoodAnalyserMSTest
         /// Given the null mood should return happy.
         /// </summary>
         [TestMethod]
-        public void Given_NullMood_Should_ReturnHappy()
+        [DataRow(null)]
+        public void Given_NullMood_Should_Throw_MoodAnalysisException(string message)
         {
-            MoodAnalyser moodAnalyser = new MoodAnalyser(null);
-            string actualMood = moodAnalyser.AnalyseMood();
-            Assert.AreEqual("Happy", actualMood);
+            try
+            {
+                MoodAnalyser moodAnalyser = new MoodAnalyser(message);
+                string mood = moodAnalyser.AnalyseMood();
+            }
+            catch (MoodAnalysisException exception)
+            {
+                Assert.AreEqual("Mood cannot be null", exception.Message);
+            }
+        }
+        /// <summary>
+        /// Givens the empty mood should throw invalidmood exception.
+        /// </summary>
+        [TestMethod]
+        public void Given_EmptyMood_Should_Throw_MoodAnalysisException()
+        {
+            try
+            {
+                string message = "";
+                MoodAnalyser moodAnalyser = new MoodAnalyser(message);
+                string mood = moodAnalyser.AnalyseMood();
+            }
+            catch(MoodAnalysisException exception)
+            {
+                Assert.AreEqual("Mood cannot be empty", exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// T.C ->  4.1
+        /// Givens the mood analyse class name should return mood analyse object.
+        /// </summary>
+        [TestMethod]
+        public void GivenMoodAnalyseClassName_ShouldReturn_MoodAnalyseObject()
+        {
+            object expected = new MoodAnalyser();
+            object obj = MoodAnalyseFactory.CreateMoodAnalyserObject("MoodAnalyserDemo.MoodAnalyser", "MoodAnalyser");
+            expected.Equals(obj);
         }
     }
 }
