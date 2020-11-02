@@ -39,11 +39,11 @@ namespace MoodAnalyserDemo
                 }
                 if (mood.Contains("Sad"))
                 {
-                    return "Sad";
+                    return "SAD";
                 }
                 else
                 {
-                    return "Happy";
+                    return "HAPPY";
                 }
             }
             catch (NullReferenceException)

@@ -16,7 +16,7 @@ namespace MoodAnalyserMSTest
             ///Create a reference of MoodAnalyser Class
             MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Sad Mood");
             string actualMood = moodAnalyser.AnalyseMood();
-            Assert.AreEqual("Sad", actualMood);
+            Assert.AreEqual("SAD", actualMood);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace MoodAnalyserMSTest
             ///create a reference of MoodAnalyser class
             MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Any mood");
             string actualMood = moodAnalyser.AnalyseMood();
-            Assert.AreEqual("Happy", actualMood);
+            Assert.AreEqual("HAPPY", actualMood);
         }
 
         /// <summary>
@@ -168,6 +168,36 @@ namespace MoodAnalyserMSTest
             catch(MoodAnalysisException exception)
             {
                 Assert.AreEqual("Constructor Not Found" , exception.Message);
+            }
+        }
+        /// <summary>
+        /// T.C -> 6.1
+        /// Givens the happy message using reflector when proper should return happy.
+        /// </summary>
+        [TestMethod]
+        public void GivenHappyMessageUsingReflector_When_Proper_ShouldReturnHappy()
+        {
+            string expected = "HAPPY";
+            string mood = MoodAnalyseFactory.InvokeAnalyseMood("Happy", "AnalyseMood");
+            Assert.AreEqual(expected, mood);
+        }
+
+        /// <summary>
+        /// T.C -> 6.2
+        /// Givens the happy message when improper method should throw mood analysis exception.
+        /// </summary>
+        [TestMethod]
+        public void GivenHappyMessage_WhenImproperMethodShould_ThrowMoodAnalysisException()
+        {
+            try
+            {
+                string message = "Happy";
+                string methodName = "AnalysMode";
+                string mood = MoodAnalyseFactory.InvokeAnalyseMood(message, methodName);
+            }
+            catch(MoodAnalysisException exception)
+            {
+                Assert.AreEqual("Method Not Found", exception.Message);
             }
         }
     }

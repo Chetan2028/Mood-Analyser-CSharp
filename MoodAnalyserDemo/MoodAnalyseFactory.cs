@@ -48,7 +48,7 @@ namespace MoodAnalyserDemo
         /// <param name="className">Name of the class.</param>
         /// <param name="constructorName">Name of the constructor.</param>
         /// <returns></returns>
-        public static object CreateMoodAnalyserObjectUsingParameterizedConstructor(string className, string constructorName , string message)
+        public static object CreateMoodAnalyserObjectUsingParameterizedConstructor(string className, string constructorName, string message)
         {
             Type type = typeof(MoodAnalyser);
             if (type.Name.Equals(className) || type.FullName.Equals(className))
@@ -69,5 +69,28 @@ namespace MoodAnalyserDemo
                 throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_CLASS, "Class Not Found");
             }
         }
+        /// <summary>
+        /// Invokes the analyse mood.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="methodName">Name of the method.</param>
+        /// <returns></returns>
+        /// <exception cref="MoodAnalysisException">Method Not Found</exception>
+        public static string InvokeAnalyseMood(string message, string methodName)
+        {
+            try
+            {
+                Type type = Type.GetType("MoodAnalyserDemo.MoodAnalyser");
+                object moodAnalyserObject = MoodAnalyseFactory.CreateMoodAnalyserObjectUsingParameterizedConstructor("MoodAnalyserDemo.MoodAnalyser", "MoodAnalyser", message);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object mood = methodInfo.Invoke(moodAnalyserObject, null);
+                return mood.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_METHOD, "Method Not Found");
+            }
+        }
     }
 }
+
