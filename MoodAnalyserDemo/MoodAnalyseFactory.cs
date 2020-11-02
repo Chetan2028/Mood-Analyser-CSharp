@@ -28,7 +28,7 @@ namespace MoodAnalyserDemo
                 {
                     Assembly executing = Assembly.GetExecutingAssembly();
                     Type moodAnalyseType = executing.GetType(className);
-                    return Activator.CreateInstance(moodAnalyseType); 
+                    return Activator.CreateInstance(moodAnalyseType);
                 }
                 catch (ArgumentNullException)
                 {
@@ -38,6 +38,35 @@ namespace MoodAnalyserDemo
             else
             {
                 throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_METHOD, "Constructor Not Found");
+            }
+        }
+
+        /// <summary>
+        /// UC5- For paramterized constructor by passsing message parameter to class method
+        /// Creates the mood analyser object using parameterized constructor.
+        /// </summary>
+        /// <param name="className">Name of the class.</param>
+        /// <param name="constructorName">Name of the constructor.</param>
+        /// <returns></returns>
+        public static object CreateMoodAnalyserObjectUsingParameterizedConstructor(string className, string constructorName , string message)
+        {
+            Type type = typeof(MoodAnalyser);
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
+            {
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo ctor = type.GetConstructor(new[] { typeof(string) });
+                    object instance = ctor.Invoke(new object[] { "HAPPY" });
+                    return instance;
+                }
+                else
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_METHOD, "Constructor Not Found");
+                }
+            }
+            else
+            {
+                throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_CLASS, "Class Not Found");
             }
         }
     }
