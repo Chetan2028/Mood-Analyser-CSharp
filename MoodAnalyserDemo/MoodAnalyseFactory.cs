@@ -7,6 +7,8 @@ namespace MoodAnalyserDemo
 {
     public class MoodAnalyseFactory
     {
+        public static object MoodAnalyserCustomException { get; private set; }
+
         /// <summary>
         /// Creates the mood analyser object.
         /// </summary>
@@ -89,6 +91,37 @@ namespace MoodAnalyserDemo
             catch (NullReferenceException)
             {
                 throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_METHOD, "Method Not Found");
+            }
+        }
+
+        /// <summary>
+        /// Sets the field value.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        /// <exception cref="MoodAnalysisException">
+        /// Mood Cannot Be Null
+        /// or
+        /// Field Not Found
+        /// </exception>
+        public static Object SetFieldValue(string message, string fieldName)
+        {
+            try
+            {
+                MoodAnalyser moodAnalyser = new MoodAnalyser();
+                Type type = typeof(MoodAnalyser);
+                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                if (message == null)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NULL_MESSAGE, "Mood Cannot Be Null");
+                }
+                field.SetValue(moodAnalyser, message);
+                return moodAnalyser.mood;
+            }
+            catch(NullReferenceException)
+            {
+                throw new MoodAnalysisException(MoodAnalysisException.MoodAnalysisEnum.NO_SUCH_FIELD, "Field Not Found");
             }
         }
     }

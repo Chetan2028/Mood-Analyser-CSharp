@@ -200,5 +200,64 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual("Method Not Found", exception.Message);
             }
         }
+
+        /// <summary>
+        /// TC 7.1 When given proper fieldName and a mood message for happy mood then should return HAPPY
+        /// </summary>
+        [TestMethod]
+        public void Given_ProperFieldName_And_HappyMoodMessage_Should_Return_HAPPY()
+        {
+            ///Arrange
+            string mood = "HAPPY";
+            string fieldName = "mood";
+            /// Act
+            object actualoutput = MoodAnalyseFactory.SetFieldValue(mood, fieldName);
+
+            /// Assert
+            Assert.AreEqual("HAPPY", actualoutput);
+        }
+
+        /// <summary>
+        ///  TC 7.2
+        ///  When given wrong fieldName and a happy mood message then should throw exception
+        /// </summary>
+        [TestMethod]
+        public void Given_Improper_FieldName_And_HappyMoodMessage_Should_Return_NoSuchFieldFound()
+        {
+            try
+            {
+                ///Arrange
+                string mood = "I am in happy mood today";
+                string fieldName = "InvalidField";
+                /// Act
+                object actual = MoodAnalyseFactory.SetFieldValue(mood, fieldName);
+            }
+            catch (MoodAnalysisException exception)
+            {
+                /// Assert
+                Assert.AreEqual("Field Not Found", exception.Message);
+            }
+        }
+        /// <summary>
+        /// TC 7.3 
+        /// When given correct fieldName and passing a null mood message then throw error that Mood should not be NULL
+        /// </summary>
+        [TestMethod]
+        public void Given_Proper_FieldName_And_NULL_Should_Return_MoodCannotBeNull()
+        {
+            try
+            {
+                ///Arrange
+                string mood = null;
+                string fieldName = "mood";
+                /// Act
+                object actual = MoodAnalyseFactory.SetFieldValue(mood, fieldName);
+            }
+            catch (MoodAnalysisException exception)
+            {
+                /// Assert
+                Assert.AreEqual("Mood Cannot Be Null", exception.Message);
+            }
+        }
     }
 }
